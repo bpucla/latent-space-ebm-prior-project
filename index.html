@@ -100,13 +100,22 @@
     
     <h2>Experiments</h2>
     <h3>Experiment 1: Image</h3>
-    <p>The generator network $p_\theta$ in our framework is well-learned to generate samples that are realistic and share visual similarities as the training data. The qualitative results are shown in the figure below. We further evaluate our model quantitatively by using Fréchet Inception Distance (FID) in the table below. It can be seen that our model achieves superior generation performance compared to listed baseline models.</p>
-<!--     <div class="figure">
-        <img src="./figure/synthesis/celeba64_vae.png" width="300" style="margin:10px">
-        <img src="./figure/synthesis/celeba64.png" width="300" style="margin:10px">
-        <p class="caption"><b>Figure 1:</b> Generated samples for top-down models \(g_\theta(z)\) learned by Ladder-VAE (left) and our proposed means of approximate inference by short run MCMC (right) on CelebA \((64 \times 64)\).</p>
+    <p>The generator network \(p_\theta\) in our framework is well-learned to generate samples that are realistic and share visual similarities as the training data. The qualitative results are shown in Figure 1. We further evaluate our model quantitatively by using Fréchet Inception Distance (FID) in the table below. It can be seen that our model achieves superior generation performance compared to listed baseline models.</p>
+    <div class="figure">
+        <img src="./figure/image/svhn/synthesis/synthesis_latent_ebm.png" width="200" style="margin:10px">
+        <img src="./figure/image/cifar10/synthesis/cifar10_syn.png" width="200" style="margin:10px">
+        <img src="./figure/image/celeba/synthesis/celeba_latent_ebm_synthesis.png" width="200" style="margin:10px">
+        <p class="caption"><b>Figure 1:</b> Generated samples for SVHN \((32 \times 32)\), CIFAR-10 \((32 \times 32)\), and CelebA \((64 \times 64)\).</p>
     </div>
- -->
+
+
+    <div class="figure">
+        <img src="./figure/image/fid/fid_table.png" width="800" style="margin:10px">
+    </div>
+
+
+
+
 <!--     <h3>Experiment 2: Reconstruction</h3>
     <p>We evaluate the accuracy of the learned short run MCMC inference dynamics \(q_{s, \theta_t}(z|x_i)\) by reconstructing test images. In contrast to traditional MCMC posterior sampling with persistent chains, short run inference with small \(K\) allows not only for efficient learning on training examples, but also the same dynamics can be recruited for testing examples. Figure 2 compares the reconstructions of learned generators with \(L=5\) layers by Ladder-VAE and short run inference on CelebA \((64\times64\times3)\). The fidelity of reconstructions by short run MCMC inference appears qualitatively improved over VAE</p>
     <div class="figure">
