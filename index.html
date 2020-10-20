@@ -95,7 +95,7 @@
     
 
     <h2>Code</h2>
-    <p>The code can be obtained <a href="https://github.com/bpucla/latent-space-EBM-prior">here</a>. (Coming soon)</p>
+    <p>The code can be obtained <a href="https://github.com/bpucla/latent-space-EBM-prior">here</a>. </p>
     <hr>
     
     <h2>Experiments</h2>
@@ -114,41 +114,36 @@
     </div>
 
 
+    <h3>Experiment 2: Text</h3>
+    <p> To evaluate the quality of the generated samples, we recruit Forward Perplexity (FPPL) and Reverse Perplexity (RPPL). FPPL is the perplexity of the generated samples evaluated under a language model trained with real data and measures the fluency of the synthesized sentences. RPPL is the perplexity of real data (the test data partition) computed under a language model trained with the model-generated samples. Prior work employs it to measure the distributional coverage of a learned model, \(p_\theta(x)\) in our case, since a model with a mode-collapsing issue results in a high RPPL. FPPL and RPPL are displayed in Table 2. Our model outperforms all the baselines on the two metrics, demonstrating the high fluency and diversity of the samples from our model. </p>
+    <div class="figure">
+        <img src="./figure/text/text_table.png" width="800" style="margin:10px">
+    </div>
 
 
-<!--     <h3>Experiment 2: Reconstruction</h3>
-    <p>We evaluate the accuracy of the learned short run MCMC inference dynamics \(q_{s, \theta_t}(z|x_i)\) by reconstructing test images. In contrast to traditional MCMC posterior sampling with persistent chains, short run inference with small \(K\) allows not only for efficient learning on training examples, but also the same dynamics can be recruited for testing examples. Figure 2 compares the reconstructions of learned generators with \(L=5\) layers by Ladder-VAE and short run inference on CelebA \((64\times64\times3)\). The fidelity of reconstructions by short run MCMC inference appears qualitatively improved over VAE</p>
+    <h3>Experiment 3: Analysis of latent space</h3>
+    <p> We examine the exponential tilting of the reference prior \(p_0(z)\) through Langevin samples initialized from \(p_0(z)\) with target distribution \(p_\alpha(z)\). As the reference distribution \(p_0(z)\) is in the form of an isotropic Gaussian, we expect the energy-based correction \(f_\alpha\) to tilt \(p_0\) into an irregular shape like some shallow local modes. Therefore, the trajectory of a Markov chain initialized from the reference distribution \(p_0(z)\) with well-learned target \(p_\alpha(z)\) should depict the transition towards synthesized examples of high quality while the energy fluctuates around some constant. Figure 2 depicts such transitions for CelebA, which is based on a model trained with \(K_0 = 40\) steps. The quality of synthesis improves significantly with increasing number of steps.
+ </p>
     <div class="figure">
-        <img src="./figure/reconstruction/recon64.png" width="400">
-        <p class="caption"><b>Figure 2:</b> Comparison of reconstructions between Ladder-VAE samples and our method on CelebA \((64\times64\times3)\) with \(L=5\). Top: original test images. Middle: reconstructions from VAE. Bottom: reconstructions by short run inference.</p>
+        <img src="./figure/transition/image_transition.png" width="800" style="margin:10px">
+        <p class="caption"><b>Figure 2:</b> Transition of Markov chains initialized from \(p_0(z)\) towards \(\tilde{p}_{\alpha}(z)\) for \(K_0'=100\) steps. Top: Trajectory in the CelebA data-space. Bottom: Energy profile over time.</p>
     </div>
- -->    
-<!--     <h3>Experiment 3: Inpainting</h3>
-    <p>Our method can "inpaint" occluded image regions. To recover the occluded pixels, the only required modification involves the computation of \(\|x - g_\theta(z)\|^2/\sigma^2\). For a fully observed image, the term is computed by the summation over all pixels. For partially observed images, we only compute the summation over the observed pixels. Figure 3 depicts test images taken from the CelebA dataset for which a mask randomly occludes pixels in various patterns.</p>
-    <div class="figure">
-        <img src="./figure/inpaint/inpaint.png" width="400">
-        <p class="caption"><b>Figure 3:</b> Inpainting on CelebA \((64\times64\times3)\) with \(L=5\) for varying occlusion masks. Top: original test images. Middle: occluded images. Bottom: inpainted test images by short run MCMC inference.</p>
-    </div>
-    
-    <h3>Experiment 4: Hierarchical representation</h3>
-    <p>Multi-layer latent variable models not only demonstrate improved expressiveness over single-layer ones but also allow for learning the hierarchical structure. It can be argued that an alternative parameterization of the multi-layer generator promotes disentangled hierarchical features. We train a three-layer model with this parameterization using short run inference on SVHN. As shown in Figure 4, the three-layer latent variables capture disentangled representations, which are background color, digit identity, general structure from bottom to top layer.</p>
-    <div class="figure">
-        <img src="./figure/disentanglement/l1.png" width="200">
-        <img src="./figure/disentanglement/l2.png" width="200">
-        <img src="./figure/disentanglement/l3.png" width="200">
-        <p class="caption"><b>Figure 4:</b> Generated samples from a three-layer generator where each sub-figure corresponds to samples drawn when fixing the latent variables \(z\) of all layers except for one. (left) The bottom layer represents background color. (center) The second layer represents digit identity. (right) The top layer represents general structure.</p>
-    </div>
-    
-    <h3>Experiment 5: Variational optimization of step size</h3>
-    <p>The step size \(s\) of short run MCMC may be optimized such that \(q_s(z)\) best approximates the posterior \(p_\theta(z|x)\). That is, we can optimize the step size \(s\) by minimizing \(KL(q_s(z) \| p_\theta(z|x))\) via a grid search or gradient descent. Then, we evaluate the eigenvalues of \(d F(z_0, \epsilon)/d z_0\). As both steps are computed in a differentiable manner, we may compute the gradient with respect to \(s\).
 
-Figure 5 depict the optimal step size \(s\) over learning iterations \(t\) determined by grid-search and gradient descent.</p>
+
+    <h3>Experiment 4: Anomaly detection</h3>
+    <p> If the generator and EBM are well learned, then the posterior \(p_\theta(z|x)\) would form a discriminative latent space that has separated probability densities for normal and anomalous data. Samples from such latent space can then be used as discriminative features to detect anomalies. We perform posterior sampling on the learned model to obtain the latent samples, and use the unnormalized log-posterior \(\log p_\theta(x, z)\) as our decision function. </p>
     <div class="figure">
-        <img src="./figure/step/105_1_step_size_75_train_abp_mnist_32_hierarchical_ladder_one_celeba_1_extra_kl_grid_small_correct_plot_2_ss/plot.png" width="200">
-        <img src="./figure/step/106_1_step_size_75_train_abp_mnist_32_hierarchical_ladder_one_celeba_1_extra_kl_gd_small_correct_plot_2_ss/plot.png" width="200">
-        <img src="./figure/step/105_1_step_size_75_train_abp_mnist_32_hierarchical_ladder_one_celeba_1_extra_kl_grid_small_correct_plot_4_kls_4_lines/plot.png" width="200">
-        <p class="caption"><b>Figure 5:</b> (left) and (center) step size \(s\) over epochs \(T\) for three individual runs with varying random seed. (right) \(E_{q_s(z)}[\log q_s(z) -\log p_\theta(x, z)]\) for step sizes \(s\) over epochs \(T\).</p>
-    </div> -->
+        <img src="./figure/anomaly/anomaly_table.png" width="800" style="margin:10px">
+    </div>
+
+
+    <h3>Experiment 5: Scalability</h3>
+    <p> We have also explored avenues to improve training speed and found that a PyTorch extension, NVIDIA Apex, is able to improve our model training 2.5 times. We test our method with Apex training on a larger scale dataset, CelebA \( (128 \times 128 \times 3) \). The learned model is able to synthesize examples with high fidelity. </p>
+    <div class="figure">
+        <img src="./figure/image/celeba_large/celeba128_synthesis.png" width="600" style="margin:10px">
+    </div>
+
+
     <hr>
     <h2>Acknowledgements</h2>
     <p>The work is supported by NSF DMS-2015577, DARPA XAI N66001-17-2-4029, ARO W911NF1810296, ONR MURI N00014-16-1-2007, and XSEDE grant ASC170063. We thank NVIDIA for the donation of Titan V GPUs.</p>
