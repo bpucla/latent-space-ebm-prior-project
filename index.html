@@ -101,12 +101,12 @@
     <h2>Experiments</h2>
     <h3>Experiment 1: Image</h3>
     <p>The generator network $p_\theta$ in our framework is well-learned to generate samples that are realistic and share visual similarities as the training data. The qualitative results are shown in the figure below. We further evaluate our model quantitatively by using Fréchet Inception Distance (FID) in the table below. It can be seen that our model achieves superior generation performance compared to listed baseline models.</p>
-    <div class="figure">
+<!--     <div class="figure">
         <img src="./figure/synthesis/celeba64_vae.png" width="300" style="margin:10px">
         <img src="./figure/synthesis/celeba64.png" width="300" style="margin:10px">
         <p class="caption"><b>Figure 1:</b> Generated samples for top-down models \(g_\theta(z)\) learned by Ladder-VAE (left) and our proposed means of approximate inference by short run MCMC (right) on CelebA \((64 \times 64)\).</p>
     </div>
-
+ -->
 <!--     <h3>Experiment 2: Reconstruction</h3>
     <p>We evaluate the accuracy of the learned short run MCMC inference dynamics \(q_{s, \theta_t}(z|x_i)\) by reconstructing test images. In contrast to traditional MCMC posterior sampling with persistent chains, short run inference with small \(K\) allows not only for efficient learning on training examples, but also the same dynamics can be recruited for testing examples. Figure 2 compares the reconstructions of learned generators with \(L=5\) layers by Ladder-VAE and short run inference on CelebA \((64\times64\times3)\). The fidelity of reconstructions by short run MCMC inference appears qualitatively improved over VAE</p>
     <div class="figure">
@@ -114,7 +114,7 @@
         <p class="caption"><b>Figure 2:</b> Comparison of reconstructions between Ladder-VAE samples and our method on CelebA \((64\times64\times3)\) with \(L=5\). Top: original test images. Middle: reconstructions from VAE. Bottom: reconstructions by short run inference.</p>
     </div>
  -->    
-    <h3>Experiment 3: Inpainting</h3>
+<!--     <h3>Experiment 3: Inpainting</h3>
     <p>Our method can "inpaint" occluded image regions. To recover the occluded pixels, the only required modification involves the computation of \(\|x - g_\theta(z)\|^2/\sigma^2\). For a fully observed image, the term is computed by the summation over all pixels. For partially observed images, we only compute the summation over the observed pixels. Figure 3 depicts test images taken from the CelebA dataset for which a mask randomly occludes pixels in various patterns.</p>
     <div class="figure">
         <img src="./figure/inpaint/inpaint.png" width="400">
@@ -139,7 +139,7 @@ Figure 5 depict the optimal step size \(s\) over learning iterations \(t\) deter
         <img src="./figure/step/106_1_step_size_75_train_abp_mnist_32_hierarchical_ladder_one_celeba_1_extra_kl_gd_small_correct_plot_2_ss/plot.png" width="200">
         <img src="./figure/step/105_1_step_size_75_train_abp_mnist_32_hierarchical_ladder_one_celeba_1_extra_kl_grid_small_correct_plot_4_kls_4_lines/plot.png" width="200">
         <p class="caption"><b>Figure 5:</b> (left) and (center) step size \(s\) over epochs \(T\) for three individual runs with varying random seed. (right) \(E_{q_s(z)}[\log q_s(z) -\log p_\theta(x, z)]\) for step sizes \(s\) over epochs \(T\).</p>
-    </div>
+    </div> -->
     <hr>
     <h2>Acknowledgements</h2>
     <p>The work is supported by NSF DMS-2015577, DARPA XAI N66001-17-2-4029, ARO W911NF1810296, ONR MURI N00014-16-1-2007, and XSEDE grant ASC170063. We thank NVIDIA for the donation of Titan V GPUs.</p>
